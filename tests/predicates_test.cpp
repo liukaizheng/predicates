@@ -6,11 +6,13 @@
 #include <iostream>
 #include "predicates/interval_number.hpp"
 
+using namespace predicates;
+
 int main() {
     IntervalNumber a(2.0);
     IntervalNumber b(-3.0);
     auto c = a * b;
-    std::cout << c.data_[0] << " " << c.data_[1] << std::endl;
+
     int failures = 0;
   const auto check = [&](bool ok, const char* expr) {
     if (!ok) {

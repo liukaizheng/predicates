@@ -1,4 +1,6 @@
 #include "predicates/predicates.hpp"
+#include <predicates/natural_number.hpp>
+#include <predicates/float_number.hpp>
 
 namespace predicates {
 
@@ -11,4 +13,3 @@ bool is_odd(int value) noexcept {
 }
 
 }  // namespace predicates
-

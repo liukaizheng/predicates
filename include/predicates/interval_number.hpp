@@ -3,7 +3,7 @@
 #include <cfenv>
 #include <x86/avx2.h>
 
-namespace rounding {
+namespace predicates {
 
 inline void set_upward() noexcept {
     std::fesetround(FE_UPWARD);
@@ -13,7 +13,6 @@ inline void set_nearest() noexcept {
     std::fesetround(FE_TONEAREST);
 }
 
-}  // namespace rounding
 
 class IntervalNumber {
 public:
@@ -61,3 +60,5 @@ public:
 private:
     simde__m128d data_;
 };
+
+}  // namespace predicates
