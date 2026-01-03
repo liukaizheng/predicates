@@ -259,7 +259,9 @@ double orient3d(const double* pa, const double* pb, const double* pc, const doub
         }
     }
     {
+        set_upward();
         const auto det = orient3d_impl<IntervalNumber>(pa[0], pa[1], pa[2], pb[0], pb[1], pb[2], pc[0], pc[1], pc[2], pd[0], pd[1], pd[2]);
+        set_nearest();
         if (det.defined()) {
             return det.to_double();
         }
@@ -277,7 +279,9 @@ double orient3d_one(const double* pa, const double* pb, const double* pc, const 
         }
     }
     {
+        set_upward();
         const auto det = orient3d_one_impl<IntervalNumber>(pa[0], pa[1], pa[2], pa[3], pb[0], pb[1], pb[2], pb[3], pc[0], pc[1], pc[2], pc[3], pd[0], pd[1], pd[2], pd[3]);
+        set_nearest();
         if (det.defined()) {
             return det.to_double();
         }
@@ -297,7 +301,9 @@ double orient4d(const double* pa, const double* pb, const double* pc, const doub
         }
     }
     {
+        set_upward();
         const auto det = orient4d_impl<IntervalNumber>(pa[0], pa[1], pa[2], pa[3], pb[0], pb[1], pb[2], pb[3], pc[0], pc[1], pc[2], pc[3], pd[0], pd[1], pd[2], pd[3], pe[0], pe[1], pe[2], pe[3]);
+        set_nearest();
         if (det.defined()) {
             return det.to_double();
         }
