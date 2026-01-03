@@ -25,16 +25,11 @@ add_library(predicates STATIC
 target_include_directories(predicates PUBLIC
   ${PROJECT_SOURCE_DIR}/include
 )
-target_link_libraries(predicates PUBLIC simde)
+target_link_libraries(predicates PRIVATE simde)
 target_compile_features(predicates PRIVATE cxx_std_23)
-
-add_executable(predicates_cli
-  src/main.cpp
-)
-
-target_link_libraries(predicates_cli PRIVATE
-  predicates
-)
+if (NOT WIN32)
+  target_compile_options(predicates PRIVATE -frounding-math)
+endif()
 
 include(CTest)
 if(BUILD_TESTING)

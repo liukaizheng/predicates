@@ -57,7 +57,7 @@ public:
     FloatNumber() : exponent_(0), sign_(0) {}
 
     // Construct from double (lossless)
-    explicit FloatNumber(double d) {
+    FloatNumber(double d) {
         sign_ = (d > 0) - (d < 0);
 
         if (sign_ == 0) {

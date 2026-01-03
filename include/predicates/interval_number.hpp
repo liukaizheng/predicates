@@ -1,5 +1,6 @@
 #pragma once
 
+#include "x86/sse2.h"
 #include <cfenv>
 #include <x86/avx2.h>
 
@@ -16,17 +17,37 @@ inline void set_nearest() noexcept {
 
 class IntervalNumber {
 public:
-    explicit IntervalNumber(double value) noexcept
+    IntervalNumber(double value) noexcept
         : data_(simde_mm_set_pd(-value, value)) {}
 
     explicit IntervalNumber(simde__m128d data) noexcept
         : data_(data) {}
-
     IntervalNumber(const IntervalNumber&) noexcept = default;
     IntervalNumber(IntervalNumber&&) noexcept = default;
     IntervalNumber& operator=(const IntervalNumber&) noexcept = default;
     IntervalNumber& operator=(IntervalNumber&&) noexcept = default;
     ~IntervalNumber() = default;
+
+    static simde__m128d zero() noexcept {
+        return simde_mm_setzero_pd();
+    }
+
+
+    [[nodiscard]] bool negative() const noexcept {
+        return simde_mm_comilt_sd(data_, zero());
+    }
+
+    [[nodiscard]] bool positive() const noexcept {
+        return simde_mm_comilt_sd(simde_mm_shuffle_pd(data_, data_, 1), zero());
+    }
+
+    [[nodiscard]] bool defined() const noexcept {
+        return negative() || positive();
+    }
+
+    [[nodiscard]] double to_double() const noexcept {
+        return (data_[1] - data_[0]) * 0.5;
+    }
 
     [[nodiscard]] IntervalNumber operator+(const IntervalNumber& other) const noexcept {
         return IntervalNumber(simde_mm_add_pd(data_, other.data_));
