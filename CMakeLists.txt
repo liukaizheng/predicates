@@ -14,9 +14,13 @@ CPMAddPackage(
 add_library(simde INTERFACE)
 target_include_directories(simde INTERFACE "${SIMDE_SOURCE_DIR}/simde")
 target_compile_definitions(simde INTERFACE SIMDE_ENABLE_NATIVE_ALIASES)
-if(APPLE)
-  target_compile_options(simde INTERFACE -march=armv8-a+simd)
-endif()
+
+target_compile_options(simde INTERFACE
+    "$<$<AND:$<PLATFORM_ID:Windows>,$<CXX_COMPILER_ID:MSVC>>:/arch:AVX2>"
+    "$<$<AND:$<PLATFORM_ID:Windows>,$<CXX_COMPILER_ID:GNU,Clang>>:-mavx2>"
+    "$<$<PLATFORM_ID:Linux>:-mavx2>"
+    "$<$<PLATFORM_ID:Darwin>:-march=armv8-a+simd>"
+)
 
 add_library(predicates STATIC
   src/predicates.cpp
@@ -27,9 +31,12 @@ target_include_directories(predicates PUBLIC
 )
 target_link_libraries(predicates PRIVATE simde)
 target_compile_features(predicates PRIVATE cxx_std_23)
-if (NOT WIN32)
-  target_compile_options(predicates PRIVATE -frounding-math)
-endif()
+
+
+target_compile_options(predicates PRIVATE
+  $<$<CXX_COMPILER_ID:MSVC>:/fp:strict>
+  $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-frounding-math>
+)
 
 include(CTest)
 if(BUILD_TESTING)

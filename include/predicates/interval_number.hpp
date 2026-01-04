@@ -1,6 +1,5 @@
 #pragma once
 
-#include "x86/sse2.h"
 #include <cfenv>
 #include <x86/avx2.h>
 
