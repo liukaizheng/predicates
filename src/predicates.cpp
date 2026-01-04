@@ -314,7 +314,7 @@ double orient4d(const double* pa, const double* pb, const double* pc, const doub
 }
 
 std::array<double, 2> mi_orient0d(const double a, const double b) noexcept {
-    return {{a - b, 1.0}};
+    return {{b - a, 1.0}};
 }
 
 std::array<double, 2> mi_orient1d(const double* pa, const double* pb, const double* pc) noexcept {
