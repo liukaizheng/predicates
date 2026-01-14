@@ -321,18 +321,18 @@ std::array<double, 2> mi_orient1d(const double* pa, const double* pb, const doub
     const auto numerator = orient2d(pa, pb, pc);
     const auto denominator = orient1d_one(pa, pb);
     if (denominator > 0.0) {
-        return {{numerator, denominator}};
+        return {{-numerator, denominator}};
     } else {
-        return {{ -numerator, -denominator }};
+        return {{ numerator, -denominator }};
     }
 }
 std::array<double, 2> mi_orient2d(const double* pa, const double* pb, const double* pc, const double* pd) noexcept {
     const auto numerator = orient3d(pa, pb, pc, pd);
     const auto denominator = orient2d_one(pa, pb, pc);
     if (denominator > 0.0) {
-        return {{numerator, denominator}};
+        return {{-numerator, denominator}};
     } else {
-        return {{ -numerator, -denominator }};
+        return {{ numerator, -denominator }};
     }
 }
 
@@ -340,9 +340,9 @@ std::array<double, 2> mi_orient4d(const double* pa, const double* pb, const doub
     const auto numerator = orient4d(pa, pb, pc, pd, pe);
     const auto denominator = orient3d_one(pa, pb, pc, pd);
     if (denominator > 0.0) {
-        return {{numerator, denominator}};
+        return {{-numerator, denominator}};
     } else {
-        return {{ -numerator, -denominator }};
+        return {{ numerator, -denominator }};
     }
 }
 }  // namespace predicates

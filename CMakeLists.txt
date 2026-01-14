@@ -44,5 +44,6 @@ if(BUILD_TESTING)
     tests/predicates_test.cpp
   )
   target_link_libraries(predicates_tests PRIVATE predicates)
+  target_compile_features(predicates_tests PRIVATE cxx_std_23)
   add_test(NAME predicates_tests COMMAND predicates_tests)
 endif()
